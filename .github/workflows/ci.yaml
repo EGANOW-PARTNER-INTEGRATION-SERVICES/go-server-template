@@ -1,0 +1,27 @@
+#CI/CD workflow and other GitHub configurations
+
+name: Go CI
+on:
+  push:
+    branches: [ "feature/customer-account-onboarding" ]
+  pull_request:
+    branches: [ "main", "production", "uat", "dev" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Build
+        run: go build -v ./...
+        working-directory: ./server
+
+      - name: Test
+        run: go test -v ./tests...
+        working-directory: ./server

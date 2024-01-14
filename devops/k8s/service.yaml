@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mssql-service
+  namespace: eganowdevops
   labels:
     app: mssql-service
 spec:
@@ -16,19 +17,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-service
+  name: template-server-service
+  namespace: eganowdevops
   labels:
-    app: gateway-server
+    app: template-gateway-server
 spec:
   selector:
-    app: gateway-deployment
+    app: template-gateway-deployment
   ports:
     - protocol: TCP
       name: http
-      port: 9900
-      targetPort: 9900
+      port: 9876
+      targetPort: 9876
     - protocol: TCP
       name: grpc
-      port: 50051
-      targetPort: 50051
+      port: 34567
+      targetPort: 34567
   type: ClusterIP

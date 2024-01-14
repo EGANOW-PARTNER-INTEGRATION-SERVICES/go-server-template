@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mssql
-  namespace: default
+  namespace: eganowdevops
 spec:
   replicas: 1
   selector:
@@ -39,19 +39,37 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway-server
-  namespace: default
+  namespace: eganowdevops
 spec:
-  replicas: 1
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 30%
+      maxUnavailable: 25%
   selector:
     matchLabels:
-      app: gateway-deployment
+      app: template-gateway-deployment
   template:
     metadata:
       labels:
-        app: gateway-deployment
+        app: template-gateway-deployment
     spec:
       containers:
         - env:
+            - name: GRPC_SERVER_PORT
+              value: '34567'
+            - name: GRPC_SERVER_HOST
+              value: localhost
+            - name: HTTP_SERVER_PORT
+              value: '9876'
+            - name: HTTP_SERVER_HOST
+              value: localhost
+            - name: HMAC_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: HMAC_SECRET_KEY
+                  name: server
             - name: DB_CONN_URL
               valueFrom:
                 secretKeyRef:
@@ -82,9 +100,9 @@ spec:
               value: '30'
             - name: DB_CONN_MAX_IDLE_TIME
               value: '5'
-          image: eganowdevteam/global-customer-go-api:latest
+          image: eganowdevteam/eganow-template-go-api:latest
           imagePullPolicy: Never
           ports:
-            - containerPort: 9876
-            - containerPort: 34567
+            - containerPort: 9876 # http
+            - containerPort: 34567 # grpc
           name: server

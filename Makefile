@@ -3,6 +3,7 @@ server_root := ./server
 
 build-binary:
 	@echo "building binary..." && \
+	cd server && \
 	rm -rf ./bin && \
 	mkdir -p ./bin && \
 	go build -o ./bin/<template-name> ./cmd/main.go
@@ -18,8 +19,7 @@ install-gateway-deps:
 
 build-docker:
 	@echo "building docker image..." && \
-	cd server && \
-	docker buildx build --platform linux/amd64 -t eganowdevteam/<template-name>:latest .
+	docker buildx build --platform linux/amd64 -f devops/docker/Dockerfile -t eganowdevteam/eganowdevteam/eganow-<template-name>-go-api:latest server
 
 start-docker-services:
 	@echo "starting docker services..." && \

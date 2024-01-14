@@ -1,0 +1,5 @@
+bin/
+tools/
+tests/
+.gitignore
+README.md

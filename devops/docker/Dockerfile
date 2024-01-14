@@ -11,7 +11,7 @@ RUN apk --update add ca-certificates git
 WORKDIR /app
 
 # Copy the code into the container
-COPY /server .
+COPY . .
 
 # Build the application's binary
 RUN go build -o main cmd/main.go
@@ -28,7 +28,7 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/configs/.env ./configs/.env
 
 # expose ports
-EXPOSE 9900 50051
+EXPOSE 9876 34567
 
 # Command to run the application when starting the container
 CMD ["/app/main"]

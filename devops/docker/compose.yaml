@@ -1,6 +1,6 @@
 version: '3.8'
 
-name: global-customer-go-api
+name: global-template-go-api
 
 services:
   mssql-server:

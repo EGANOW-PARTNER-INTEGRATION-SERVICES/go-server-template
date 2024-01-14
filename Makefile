@@ -23,11 +23,11 @@ build-docker:
 
 start-docker-services:
 	@echo "starting docker services..." && \
-	docker-compose -f server/devops/docker/compose.yaml up -d
+	docker-compose -f devops/docker/compose.yaml up -d
 
 apply-k8s:
 	@echo "applying k8s resources..." && \
-	kubectl apply -f server/devops/k8s -R
+	kubectl apply -f devops/k8s -R
 
 # Makefile target for creating feature structure
 feature:

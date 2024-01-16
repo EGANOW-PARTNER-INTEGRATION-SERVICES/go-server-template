@@ -51,10 +51,14 @@ create_feature_structure:
 
 	# Define file paths and contents
 	@$(eval files := \
+		"$(feature_root)/business_logic/app/entities.go|package app" \
+		"$(feature_root)/business_logic/app/models.go|package app" \
 		"$(feature_root)/business_logic/app/use_case.go|package app" \
+		"$(feature_root)/business_logic/app/data_source.go|package app" \
 		"$(feature_root)/business_logic/app/repository.go|package app" \
 		"$(feature_root)/business_logic/services/grpc.go|package service" \
 		"$(feature_root)/di/injector.go|package di" \
+		"$(feature_root)/pkg/data_source.go|package pkg" \
 		"$(feature_root)/pkg/repository.go|package pkg" \
 	)
 
